@@ -32,8 +32,8 @@
         ref="linkGroupWrapper"
       >
         <slot/>
-      </div>
-    </expanding>
+      </ul>
+    </transition-expand>
         <a href="#"
       v-if="minimized"
       slot="anchor"
@@ -63,7 +63,7 @@
 
 <script>
 import VaIcon from '../va-icon/VaIcon'
-// import { hex2hsl } from '../../../services/color-functions'
+import TransitionExpand from './TransitionExpand'
 
 export default {
   name: 'va-sidebar-link-group',
@@ -83,7 +83,6 @@ export default {
   components: {
     TransitionExpand,
     VaIcon,
-    VaDropdown,
   },
   data () {
     return {
@@ -118,12 +117,10 @@ export default {
       this.isHovered = !this.isHovered
     },
     updateActiveState () {
-      const active = this.children.some(item => '/' + this.slug + '/' + item.component === this.$route.path)
+      const active = this.children && this.children.some(item => '/' + this.slug + '/' + item.component === this.$route.path)
 
       this.isActive = this.minimized ? active : false
       if (this.isActive) this.expanded = true
-
-      // this.expanded = active
     },
   },
   computed: {
@@ -152,6 +149,16 @@ export default {
           backgroundColor: '#e8e8e8',
         }
       } else return {}
+    },
+    computedIconStyle () {
+      if (this.isHovered || this.isActive) {
+        return {
+          color: this.contextConfig.invertedColor ? 'white' : this.$themes.primary,
+        }
+      }
+      return {
+        color: this.contextConfig.invertedColor ? this.$themes.primary : 'white',
+      }
     },
     iconStyles () {
       return (this.isActive)

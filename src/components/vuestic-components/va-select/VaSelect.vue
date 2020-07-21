@@ -86,8 +86,6 @@
         :style="labelStyle"
         aria-hidden="true"
         class="va-select__label"
-        :style="labelStyle"
-        aria-hidden="true"
       >{{label}}</label>
       <div
         class="va-select__input-wrapper"
@@ -301,11 +299,11 @@ export default {
         paddingBottom: this.label ? 0 : this.multiple ? '.3125rem' : '.4375rem',
       }
     },
-    labelStyle () {
-      if (this.error) return { color: this.$themes.danger }
-      if (this.success) return { color: this.$themes.success }
-      return { color: this.$themes.primary }
-    },
+    // labelStyle () {
+    //   if (this.error) return { color: this.$themes.danger }
+    //   if (this.success) return { color: this.$themes.success }
+    //   return { color: this.$themes.primary }
+    // },
     valueProxy: {
       get () {
         return this.value

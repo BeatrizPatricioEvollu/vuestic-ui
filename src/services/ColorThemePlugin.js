@@ -1,15 +1,4 @@
-const getDefaultOptions = () => ({
-  themes: {
-    primary: '#29c4a9',
-    secondary: '#34f5d4',
-    success: '#29c4a9',
-    info: '#29c4a9',
-    danger: '#e34b4a',
-    warning: '#ffc200',
-    gray: '#A49D97',
-    dark: '#414244',
-  },
-})
+import { originalTheme } from './themes'
 
 export const ColorThemePlugin = {
   install (Vue, options) {

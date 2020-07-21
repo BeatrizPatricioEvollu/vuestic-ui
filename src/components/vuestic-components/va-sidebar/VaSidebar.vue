@@ -12,13 +12,15 @@
 
 <script>
 import { ColorThemeMixin } from '../../../services/ColorThemePlugin'
-
+import VaScrollbar from '../va-scrollbar/VaScrollbar'
 export default {
   name: 'va-sidebar',
   inject: {
     contextConfig: {},
   },
-  components: {},
+  components: {
+    VaScrollbar,
+  },
   mixins: [ColorThemeMixin],
   props: {
     minimized: {
