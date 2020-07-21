@@ -1,24 +1,26 @@
 <template>
-  <router-link
-    :class="computedLinkClass"
-    @mouseenter.native="updateHoverState(true)"
-    @mouseleave.native="updateHoverState(false)"
-    :style="computedLinkStyles"
-    active-class="va-sidebar-link--active"
-    :to="to"
-    :target="target"
-  >
-    <va-icon
-      v-if="icon"
-      class="va-sidebar-link__content__icon"
-      :style="computedIconStyles"
-      :name="icon"
-    />
-    <div class="va-sidebar-link__content__title">
-      <slot name="title"/>
-      {{title}}
-    </div>
-  </router-link>
+  <li>
+    <router-link
+      :class="computedLinkClass"
+      @mouseenter.native="updateHoverState(true)"
+      @mouseleave.native="updateHoverState(false)"
+      :style="computedLinkStyles"
+      active-class="va-sidebar-link--active"
+      :to="to"
+      :target="target"
+    >
+      <va-icon
+        v-if="icon"
+        class="va-sidebar-link__content__icon"
+        :style="computedIconStyle"
+        :name="icon"
+      />
+      <div class="va-sidebar-link__content__title">
+        <slot name="title"/>
+        {{title}}
+      </div>
+    </router-link>
+  </li>
 </template>
 
 <script>
@@ -29,6 +31,7 @@ import VaIcon from '../va-icon/VaIcon'
 export default {
   name: 'va-sidebar-link',
   components: { VaIcon },
+  inject: ['contextConfig'],
   mixins: [ColorThemeMixin],
   props: {
     to: {
@@ -84,10 +87,15 @@ export default {
         }
       } else return {}// else <- controlled by CSS (color in rgba)
     },
-    computedIconStyles () {
-      return (this.isHovered || this.isActive)
-        ? { color: this.$themes['primary'] }
-        : { color: 'white' }
+    computedIconStyle () {
+      if (this.isHovered || this.isActive) {
+        return {
+          color: this.contextConfig.invertedColor ? 'white' : this.$themes.primary,
+        }
+      }
+      return {
+        color: this.contextConfig.invertedColor ? this.$themes.secondary : 'white',
+      }
     },
   },
   methods: {

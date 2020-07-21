@@ -35,8 +35,7 @@ import VaNotification
   from './vuestic-components/va-notification/VaNotification.vue'
 import VaPagination from './vuestic-components/va-pagination/VaPagination.vue'
 import VaPopover from './vuestic-components/va-popover/VaPopover.vue'
-import VaPopup
-  from './vuestic-components/va-popup/popup/VaPopup.vue'
+import VaPopup from './vuestic-components/va-popup/popup/VaPopup.vue'
 import VaProgressBar
   from './vuestic-components/va-progress-bar/progress-types/VaProgressBar.vue'
 import VaProgressCircle
@@ -48,7 +47,8 @@ import VaSelect from './vuestic-components/va-select/VaSelect.vue'
 import VaSeparator from './vuestic-components/va-card/VaSeparator'
 import VaSidebar from './vuestic-components/va-sidebar/VaSidebar'
 import VaSidebarLink from './vuestic-components/va-sidebar/VaSidebarLink'
-import VaSidebarLinkGroup from './vuestic-components/va-sidebar/VaSidebarLinkGroup'
+import VaSidebarLinkGroup
+  from './vuestic-components/va-sidebar/VaSidebarLinkGroup'
 import VaSlider from './vuestic-components/va-slider/VaSlider.vue'
 import VaSocialNews from './vuestic-components/va-social-news/VaSocialNews.vue'
 import VaSwitch from './vuestic-components/va-switch/VaSwitch.vue'
@@ -57,15 +57,15 @@ import VaTabs from './vuestic-components/va-tabs/VaTabs.vue'
 import VaTimeline from './vuestic-components/va-timeline/VaTimeline'
 import VaTimelineItem from './vuestic-components/va-timeline/VaTimelineItem'
 import VaToggle from './vuestic-components/va-toggle/VaToggle.vue'
+import VaTopbar from './vuestic-components/va-topbar/VaTopbar'
+import VaTopbarLink from './vuestic-components/va-topbar/VaTopbarLink'
+import VaTopbarLinkGroup from './vuestic-components/va-topbar/VaTopbarLinkGroup'
 import VaTreeCategory from './vuestic-components/va-tree-view/VaTreeCategory'
 import VaTreeNode from './vuestic-components/va-tree-view/VaTreeNode'
 import VaTreeRoot from './vuestic-components/va-tree-view/VaTreeRoot'
 import VaInputWrapper from './vuestic-components/va-input/VaInputWrapper'
-
-import Toasted from './vuestic-mixins/VuesticToasted'
-
 import StickyScroll from './vuestic-directives/StickyScroll'
-
+import VaButtonDropdown from './vuestic-components/va-button-dropdown/VaButtonDropdown'
 import { installPlatform } from './vuestic-components/va-popup/install'
 import { DropdownPopperPlugin } from './vuestic-components/va-dropdown/dropdown-popover-subplugin'
 
@@ -82,6 +82,7 @@ import VaColorPickerInput
   from './vuestic-components/va-color-picker/VaColorPickerInput'
 import VaPaletteCustom
   from './vuestic-components/va-color-picker/VaPaletteCustom'
+import { ToastedMixin } from './vuestic-mixins/VuesticToasted'
 
 installPlatform()
 
@@ -141,6 +142,9 @@ const VuesticPlugin = {
       VaTimeline,
       VaTimelineItem,
       VaToggle,
+      VaTopbar,
+      VaTopbarLink,
+      VaTopbarLinkGroup,
       VaTreeCategory,
       VaTreeNode,
       VaTreeRoot,
@@ -151,17 +155,18 @@ const VuesticPlugin = {
       VaAdvancedColorPicker,
       VaColorPickerInput,
       VaPaletteCustom,
+      VaButtonDropdown,
     ].forEach(component => {
       Vue.component(component.name, component)
     })
 
     registerVuesticObject(Vue)
 
+    Vue.mixin(ToastedMixin)
+
     Vue.use(BusPlugin)
 
     Vue.use(DropdownPopperPlugin)
-
-    Vue.mixin(Toasted)
 
     Vue.directive('sticky-scroll', StickyScroll)
   },

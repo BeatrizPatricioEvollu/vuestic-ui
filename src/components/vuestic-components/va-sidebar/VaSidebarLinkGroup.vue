@@ -1,8 +1,6 @@
 <template>
   <li :class="computedClass">
-    <a
-      href="#"
-      target="_self"
+    <div
       @mouseenter="updateHoverState(true)"
       @mouseleave="updateHoverState(false)"
       @click.stop.prevent="toggleMenuItem()"
@@ -13,7 +11,7 @@
         <va-icon
           v-if="icon"
           class="va-sidebar-link__content__icon"
-          :style="iconStyles"
+          :style="computedIconStyle"
           :name="icon"
         />
         <span class="va-sidebar-link__content__title">
@@ -23,12 +21,12 @@
         </span>
         <va-icon
           class="va-sidebar-link-group__dropdown-icon"
-          :style="iconStyles"
+          :style="computedIconStyle"
           :name="`fa fa-angle-${expanded ? 'up' : 'down'}`"/>
       </div>
-    </a>
-    <expanding v-if="!minimized">
-      <div
+    </div>
+    <transition-expand v-if="!minimized">
+      <ul
         class="va-sidebar-link-group__submenu in"
         v-show="expanded"
         ref="linkGroupWrapper"
@@ -64,12 +62,12 @@
 </template>
 
 <script>
-import Expanding from 'vue-bulma-expanding/src/Expanding'
 import VaIcon from '../va-icon/VaIcon'
 // import { hex2hsl } from '../../../services/color-functions'
 
 export default {
   name: 'va-sidebar-link-group',
+  inject: ['contextConfig'],
   props: {
     icon: [String, Array],
     title: String,
@@ -83,8 +81,9 @@ export default {
     },
   },
   components: {
+    TransitionExpand,
     VaIcon,
-    Expanding,
+    VaDropdown,
   },
   data () {
     return {
@@ -166,6 +165,7 @@ export default {
 
 <style lang="scss">
 @import "../../vuestic-sass/resources/resources";
+
 .va-sidebar-link-group {
   flex-direction: column;
 

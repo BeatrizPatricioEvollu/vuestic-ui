@@ -15,6 +15,9 @@ import { ColorThemeMixin } from '../../../services/ColorThemePlugin'
 
 export default {
   name: 'va-sidebar',
+  inject: {
+    contextConfig: {},
+  },
   components: {},
   mixins: [ColorThemeMixin],
   props: {
@@ -30,8 +33,12 @@ export default {
   computed: {
     computedClass () {
       return {
-        'va-sidebar': true,
         'va-sidebar--minimized': this.minimized,
+      }
+    },
+    computedStyle () {
+      return {
+        backgroundColor: this.contextConfig.invertedColor ? 'white' : this.$themes['secondary'],
       }
     },
   },
@@ -86,6 +93,8 @@ export default {
 
   @include media-breakpoint-down(sm) {
     top: $sidebar-mobile-top;
+    min-height: $sidebar-mobile-min-height;
+    height: $sidebar-mobile-height;
   }
 
   @include media-breakpoint-down(xs) {
@@ -100,10 +109,6 @@ export default {
       .va-sidebar-link__content {
         padding-right: 0;
       }
-    }
-
-    & + .content-wrap {
-      margin-left: $sidebar-width--hidden !important;
     }
   }
 

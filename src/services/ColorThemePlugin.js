@@ -13,17 +13,8 @@ const getDefaultOptions = () => ({
 
 export const ColorThemePlugin = {
   install (Vue, options) {
-    const defaultOptions = getDefaultOptions()
-
-    if (options && options.themes) {
-      Object.assign(defaultOptions.themes, options.themes)
-    }
-
-    Vue.prototype.$themes = defaultOptions.themes
-
-    /* eslint-disable no-new */
-    // This line is just to make themes reactive
-    new Vue({ data: { themes: Vue.prototype.$themes } })
+    Vue.prototype.$themes = Object.assign({}, originalTheme.colors, options)
+    Vue.observable(Vue.prototype.$themes)
   },
 }
 
@@ -58,6 +49,17 @@ export const ColorThemeMixin = {
         return this.$themes[this.colorThemeDefault]
       }
       return this.colorDefault
+    },
+  },
+}
+
+export const ColorThemeActionsMixin = {
+  methods: {
+    // Pass colors to change global theme.
+    setColors (colors) {
+      Object.keys(colors).forEach((key) => {
+        this.$themes[key] = colors[key]
+      })
     },
   },
 }

@@ -61,11 +61,16 @@ export default {
     va: {
       default: () => ({}),
     },
+    contextConfig: {},
   },
   props: {
     tag: {
       type: String,
       default: 'button',
+    },
+    color: {
+      type: String,
+      default: 'primary',
     },
     outline: {
       type: Boolean,
@@ -194,7 +199,11 @@ export default {
         // computedStyle.boxShadow = this.shadowStyle
       }
 
-      if (this.va.color && !this.outline && !this.flat) {
+      if (
+        !this.outline &&
+        !this.flat &&
+        (this.va.color || !this.contextConfig.gradient)
+      ) {
         computedStyle.background = this.color ? this.colorComputed : this.$themes[this.va.color]
         computedStyle.backgroundImage = ''
       }
@@ -250,6 +259,7 @@ export default {
   font-family: $font-family-sans-serif;
   text-decoration: none !important;
   text-transform: initial;
+  font-weight: $font-weight-bold;
   cursor: pointer;
   transition: $btn-transition;
   background-color: $white;

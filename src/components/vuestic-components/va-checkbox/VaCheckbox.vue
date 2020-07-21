@@ -111,7 +111,7 @@ export default {
         if (this.isChecked) return { background: this.$themes.danger }
         else return { borderColor: this.$themes.danger }
       } else {
-        if (this.isChecked) return { background: this.$themes.success }
+        if (this.isChecked) return { background: this.$themes.primary }
       }
       return {}
     },
