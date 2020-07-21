@@ -4,48 +4,42 @@
     :open="open"
     :disabled="disabled"
     :placement="placement"
-    :autoHide="autoHide"
-    :popoverClass="computedPopoverClasses"
-    popoverInnerClass="va-popover__inner"
-    popoverWrapperClass="va-popover__wrap"
+    :auto-hide="autoHide"
+    :delay="delay"
+    popover-class="va-popover"
+    popover-inner-class="va-popover__inner"
+    popover-wrapper-class="va-popover__wrap"
   >
     <slot />
-
-    <template
+    <div
       slot="popover"
-      >
-      <div
-        class="va-popover__content"
-        :style="computedPopoverContentStyle">
-
-        <slot tag="template" name="popover">
-          <div v-if="icon" class="va-popover__icon">
-            <i
-              :class="icon"
-              :style="computedIconStyle"
-            />
-          </div>
-          <div v-if="title || message">
-            <div v-if="title" class="va-popover__title">
-              {{ title }}
-            </div>
-            <div class="va-popover__text">
-              {{ message }}
-            </div>
-          </div>
-        </slot>
-        <!-- <div class="va-popover__triangle"></div> TODO: Fix triangle position with dynamic css using placement prop -->
+      class="va-popover__content"
+      :style="computedPopoverStyle"
+    >
+      <div v-if="icon" class="va-popover__icon">
+        <i
+          :class="icon"
+          :style="computedIconStyle"
+        />
       </div>
-    </template>
+      <div v-if="title || message">
+        <div v-if="title" class="va-popover__title">
+          {{ title }}
+        </div>
+        <div class="va-popover__text">
+          {{ message }}
+        </div>
+      </div>
+    </div>
   </v-popover>
 </template>
 
 <script>
 import { VPopover } from 'v-tooltip'
-// import {
-//   getHoverColor,
-//   getBoxShadowColor,
-// } from '../../../services/color-functions'
+import {
+  getHoverColor,
+  getBoxShadowColor,
+} from '../../../services/color-functions'
 
 export default {
   name: 'va-popover',
@@ -86,45 +80,22 @@ export default {
       type: Boolean,
       default: true,
     },
-    popoverStyles: {
+    delay: {
       type: Object,
-      required: false,
-      default: () => {
-        return {
-          boxShadow: '0px 2px 3px 0 #414141',
-          backgroundColor: '#414141',
-          color: 'white',
-        }
-      },
-    },
-    popoverClasses: {
-      type: Array,
-      required: false,
-    },
-    backgroundColor: {
-      type: String,
-      required: false,
-      default: '#414141',
+      default: () => { return { show: 500, hide: 100 } },
     },
   },
   computed: {
-    computedPopoverClasses () {
-      let classes = ['va-popover']
-      if (this.popoverClasses) {
-        classes = classes.concat(this.popoverClasses)
-      }
-      return classes
-    },
     computedIconStyle () {
       return {
         fontSize: '1.5rem',
         color: this.$themes[this.color],
       }
     },
-    computedPopoverContentStyle () {
+    computedPopoverStyle () {
       return {
-        ...this.popoverStyles,
-        backgroundColor: this.backgroundColor,
+        boxShadow: '0px 2px 3px 0 ' + getBoxShadowColor(this.$themes[this.color]),
+        backgroundColor: getHoverColor(this.$themes[this.color]),
       }
     },
   },
@@ -132,12 +103,10 @@ export default {
 </script>
 
 <style lang="scss">
-$evollu-gray-dark: '#d3d3d3';
 .v-popover {
   display: inline;
 }
 .va-popover {
-  margin-right: 5px;
   opacity: 1;
   border: none;
   border-radius: 0.5rem;
@@ -146,7 +115,7 @@ $evollu-gray-dark: '#d3d3d3';
   &__content {
      display: flex;
      align-items: center;
-     padding: 0.4rem 0.8rem;
+     padding: 0.65rem 1rem;
      border-radius: 0.5rem;
      font-size: 1rem;
   }
@@ -165,13 +134,5 @@ $evollu-gray-dark: '#d3d3d3';
   &__text {
     line-height: 1.5;
   }
-  // &__triangle {
-  //   width: 0;
-  //   height: 0;
-  //   border-top: 10px solid transparent;
-  //   border-bottom: 10px solid transparent;
-  //   border-left: 10px solid red;
-  //   margin-right: -22px;
-  // }
 }
 </style>
