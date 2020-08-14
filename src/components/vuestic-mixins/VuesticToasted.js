@@ -14,7 +14,7 @@ Vue.use(Toasted, toastOptions)
 export default {
   methods: {
     showToast (msg, options) {
-      this.$toasted.show(msg, options)
+      return this.$toasted.show(msg, options)
     },
   },
 }
