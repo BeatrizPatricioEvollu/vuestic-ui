@@ -13,7 +13,9 @@
         :error-messages="errorMessages"
       >
         <template slot="append">
-          <va-icon color="gray" name="fa fa-calendar"/>
+          <slot name="append-icon">
+            <va-icon color="gray" name="fa fa-calendar"/>
+          </slot>
         </template>
       </va-input>
     </div>

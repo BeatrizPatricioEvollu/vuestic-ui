@@ -102,6 +102,18 @@
           </td>
         </tr>
         <tr>
+          <td>Slot</td>
+          <td>
+            <va-date-picker
+              label="Default"
+              v-model="simple">
+              <template slot="append-icon">
+                <i class="fa fa-history"></i>
+              </template>
+            </va-date-picker>
+          </td>
+        </tr>
+        <tr>
           <td>Inline</td>
           <td>
             <va-date-picker
