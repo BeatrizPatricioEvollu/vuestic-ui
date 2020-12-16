@@ -119,7 +119,8 @@ export default {
       this.isHovered = !this.isHovered
     },
     updateActiveState () {
-      const active = this.children.some(item => '/' + this.slug + '/' + item.component === this.$route.path)
+      let minimizedPath = (this.$route.path.match(/\//g) || []).length > 2 ? this.$route.path.match(/([^,]+\/){2}/)[0].slice(0,-1) : this.$route.path
+      const active = this.children.some(item => '/' + this.slug + '/' + item.component === minimizedPath)
 
       this.isActive = this.minimized ? active : false
       if (this.isActive) this.expanded = true
